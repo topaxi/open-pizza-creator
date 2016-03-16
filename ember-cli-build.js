@@ -1,6 +1,7 @@
 /*jshint node:true*/
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+var Funnel   = require('broccoli-funnel');
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
@@ -20,5 +21,11 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  return app.toTree();
+  var fonts = new Funnel(app.bowerDirectory + '/roboto-fontface', {
+    srcDir: '/fonts',
+    include: [ 'Roboto-Regular.*', 'Roboto-Light.*' ],
+    destDir: '/assets/fonts'
+  })
+
+  return app.toTree([ fonts ]);
 };
